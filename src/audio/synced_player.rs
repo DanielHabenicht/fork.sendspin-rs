@@ -7,7 +7,7 @@ use crate::audio::{AudioBuffer, AudioFormat, Sample as SendspinSample};
 use crate::error::Error;
 use crate::sync::ClockSync;
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
-use cpal::{Device, Sample, SampleFormat, Stream, StreamConfig};
+use cpal::{Device, Sample, SampleFormat, Stream, StreamConfig, I24};
 use parking_lot::Mutex;
 use std::collections::VecDeque;
 use std::sync::Arc;
@@ -669,15 +669,16 @@ impl SyncedPlayer {
         );
         let stream = match device_config.sample_format() {
             SampleFormat::F32 => output_stream!(f32),
-            SampleFormat::I16 => output_stream!(i16),
-            SampleFormat::U16 => output_stream!(u16),
+            SampleFormat::F64 => output_stream!(f64),
             SampleFormat::I8 => output_stream!(i8),
+            SampleFormat::I16 => output_stream!(i16),
+            SampleFormat::I24 => output_stream!(I24),
             SampleFormat::I32 => output_stream!(i32),
             SampleFormat::I64 => output_stream!(i64),
             SampleFormat::U8 => output_stream!(u8),
+            SampleFormat::U16 => output_stream!(u16),
             SampleFormat::U32 => output_stream!(u32),
             SampleFormat::U64 => output_stream!(u64),
-            SampleFormat::F64 => output_stream!(f64),
             _ => panic!(
                 "Unsupported sample format: {:?}",
                 device_config.sample_format()
