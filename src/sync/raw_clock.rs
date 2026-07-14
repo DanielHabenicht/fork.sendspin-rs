@@ -142,9 +142,7 @@ impl Clock for DefaultClock {
                 );
             }
         }
-        // This .into() is needed on (older) musl targets
-        #[allow(clippy::useless_conversion)]
-        (ts.tv_sec * 1_000_000 + ts.tv_nsec / 1_000).into()
+        (ts.tv_sec as i64) * 1_000_000 + (ts.tv_nsec as i64) / 1_000
     }
 
     #[cfg(not(target_os = "linux"))]
