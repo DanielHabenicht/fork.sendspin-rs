@@ -142,6 +142,8 @@ impl Clock for DefaultClock {
                 );
             }
         }
+        // This cast is necessary to make builds on musl targets work
+        #[allow(clippy::unnecessary_cast)]
         (ts.tv_sec as i64) * 1_000_000 + (ts.tv_nsec as i64) / 1_000
     }
 
