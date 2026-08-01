@@ -361,6 +361,9 @@ pub enum PlayerStateCommand {
 pub enum ClientSyncState {
     /// Client's clock filter has converged enough to begin scheduling playback.
     Synchronized,
+    /// Client has a problem preventing normal operation (unable to keep up,
+    /// clock sync issues, etc.). Serializes to `"error"`.
+    Error,
     /// Client is in use by an external system (e.g., different audio source, HDMI input)
     /// and is not currently participating in Sendspin playback with this server.
     ExternalSource,
